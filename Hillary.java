@@ -1,10 +1,31 @@
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Hillary
 {
     public static void main(String[]args)
     {
-        String newAddress = generateAddress();
-        System.out.println(newAddress);
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask()
+        {
+            int counter = 10;
+            @Override
+            public void run()
+            {
+                if(counter > 0)
+                {
+                    String newAddress = generateAddress();
+                    System.out.println(newAddress);
+                    counter--;
+                }
+                else
+                {
+                timer.cancel();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 0, 2 * 1000);
     }
 
     public static String generateAddress()
