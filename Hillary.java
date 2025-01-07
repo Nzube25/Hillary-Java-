@@ -4,9 +4,10 @@ import java.util.Enumeration;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.io.IOException;
 
 public class Hillary
 {
@@ -40,7 +41,7 @@ public class Hillary
                     }
                 }
             };
-            timer.scheduleAtFixedRate(task, 0, 2 * 1000); //change it upon completion of code
+        timer.scheduleAtFixedRate(task, 0, 2 * 1000); //change it upon completion of code
     }
 
     public static String generateAddress()
@@ -116,12 +117,12 @@ public class Hillary
                 //turn the interface up
             }
         }
-        catch(Exception e)
+        catch(Exception e )
         {
             e.printStackTrace();
         }
     }
-    
+
     public static String getInterfaceName()
     {
         String name = "";
@@ -172,8 +173,10 @@ public class Hillary
         return name;
     }
     
-    private static void executeCommand(String command)
+    private static void executeCommand(String command) throws IOException, InterruptedException
     {
-
+        Process process = Runtime.getRuntime().exec(command);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        
     }
 }
