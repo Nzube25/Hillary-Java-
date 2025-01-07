@@ -31,7 +31,7 @@ public class Hillary
                         while(usedMac.contains(newAddress));
                         usedMac.add(newAddress);
                         counter--;
-                        //setAddress(newAddress);  remove comment signs when code is complete
+                        setAddress(newAddress);  //remove comment signs when code is complete
                     }
                     else
                     {
@@ -65,30 +65,37 @@ public class Hillary
     {
         String os = System.getProperty("os.name").toLowerCase();
         String interName = getInterfaceName();
-        System.out.println(os);
+        System.out.println(os + interName + "isUp");//testing purposes
         try
         {
             if(os.contains("win"))
             {
-
+                //turn the interface down
+                //change the mac address
+                //turn the interface up
             }
             else if(os.contains("mac"))
             {
-
+                //turn the interface down
+                //change the mac address
+                //turn the interface up
             }
             else if(os.contains("nix") )
             {
-
+                //turn the interface down
+                //change the mac address
+                //turn the interface up
             }
         }
         catch(Exception e)
         {
-
+            e.printStackTrace();
         }
     }
     
-    public static void getInterfaceName()
+    public static String getInterfaceName()
     {
+        String name = "";
         try{
             // Get all network interfaces
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
@@ -97,34 +104,40 @@ public class Hillary
                 NetworkInterface netInterface = interfaces.nextElement();
 
                 // Get the interface name
-                String name = netInterface.getName();
-                System.out.println("Interface Name: " + name);
+                String testName = netInterface.getName();
+                //System.out.println("Interface Name: " + name);//testing purposes
 
                 // Check if the interface is active
                 if (netInterface.isUp()) {
-                    System.out.println("  Status: Up");
+                    //System.out.println("  Status: Up");//testing purposes
 
-                    // Display the MAC address (if available)
+                    // Display the MAC address (if available) , for testing purposes
                     byte[] mac = netInterface.getHardwareAddress();
                     if (mac != null) {
+                        /*for testing purposes
                         System.out.print("  MAC Address: ");
                         for (int i = 0; i < mac.length; i++) {
                             System.out.format("%02X%s", mac[i], (i < mac.length - 1) ? ":" : "");
                         }
                         System.out.println();
+                        **/
+                        return testName;
                     }
-
-                    // Display the IP addresses associated with this interface
+                    
+                    /*  Display the IP addresses associated with this interface
                     netInterface.getInetAddresses().asIterator().forEachRemaining(ip -> {
                                 System.out.println("  IP Address: " + ip.getHostAddress());
                         });
+                        
                 } else {
                     System.out.println("  Status: Down");
                 }
-                System.out.println();
+                System.out.println();*/
+                }
             }
         } catch (SocketException e) {
             e.printStackTrace();
         } 
+        return name;
     }
 }
