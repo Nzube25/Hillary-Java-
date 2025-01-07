@@ -70,18 +70,47 @@ public class Hillary
         {
             if(os.contains("win"))
             {
+                String [] commands = {
+                "powershell -Command \""
+                + "$adapter = Get-WmiObject Win32_NetworkAdapter | Where-Object { $_.NetConnectionID -eq '" + interName + "' }; "
+                + "$adapter.Disable(); "
+                + "$adapter.SetMACAddress('" + address + "'); "
+                + "$adapter.Enable();\""
+                };
+                
+                for(String s : commands){
+                    executeCommand(s);
+                }
                 //turn the interface down
                 //change the mac address
                 //turn the interface up
             }
             else if(os.contains("mac"))
             {
+                String [] commands = {
+                    "sudo ifconfig " + interName + " down",
+                    "sudo ifconfig " + interName + " ether " + address,
+                    "sudo ifconfig " + interName + " up",
+                    };
+                
+                for(String s : commands){
+                    executeCommand(s);
+                }
                 //turn the interface down
                 //change the mac address
                 //turn the interface up
             }
-            else if(os.contains("nix") )
+            else if(os.contains("nix") || os.contains("nux"))
             {
+                String [] commands = {
+                "sudo ifconfig " + interName + " down",
+                "sudo ifconfig " + interName + " hw ether " + address,
+                "sudo ifconfig " + interName + " up",
+                };
+                
+                for(String s : commands){
+                    executeCommand(s);
+                }
                 //turn the interface down
                 //change the mac address
                 //turn the interface up
@@ -121,7 +150,9 @@ public class Hillary
                         }
                         System.out.println();
                         **/
-                        return testName;
+                        if(netInterface.isLoopback() != true){
+                            return testName;
+                        }
                     }
                     
                     /*  Display the IP addresses associated with this interface
@@ -139,5 +170,10 @@ public class Hillary
             e.printStackTrace();
         } 
         return name;
+    }
+    
+    private static void executeCommand(String command)
+    {
+
     }
 }
